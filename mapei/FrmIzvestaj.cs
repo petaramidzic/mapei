@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace mapei
 {
@@ -15,7 +16,7 @@ namespace mapei
     {
         OleDbConnection conn = new OleDbConnection("Provider = Microsoft.Jet.OLEDB.4.0; Data Source = c:\\mapei\\mapei.mdb");
         DataSet ds;        
-        
+
         public FrmIzvestaj( DataSet _ds)
         {
             InitializeComponent();
@@ -26,8 +27,10 @@ namespace mapei
 
         private void btnKreirajIzvestaj_Click(object sender, EventArgs e)
         {
+            //CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+            //CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
             double plastika;
-            double papir;
+            double  papir;
             double celik;
             double aluminijum;
             
@@ -49,6 +52,9 @@ namespace mapei
                 adapter.Fill(ds, "Otpad");
             }            
             conn.Close();
+            
+
+            MessageBox.Show(CultureInfo.CurrentCulture.Name);
 
             aluminijum = Convert.ToDouble(ds.Tables["Otpad"].Rows[0]["Kolicina"]);
             papir = Convert.ToDouble(ds.Tables["Otpad"].Rows[1]["Kolicina"]);
